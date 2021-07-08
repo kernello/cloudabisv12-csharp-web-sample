@@ -21,7 +21,7 @@ namespace CloudABISSampleWebApp
         {
             if (!IsPostBack)
             {
-                if (string.IsNullOrEmpty(SessionManager.CloudABISAPIToken) || SessionManager.CloudABISCredentials == null) Response.Redirect("ActiveDevice.aspx");
+                if (string.IsNullOrEmpty(SessionManager.CloudABISAPIToken) || SessionManager.CloudABISCredentials == null) Response.Redirect("AppConfiguration.aspx");
 
             }
         }
@@ -54,7 +54,7 @@ namespace CloudABISSampleWebApp
                     }
                     else
                     {
-                        Response.Redirect("ActiveDevice.aspx");
+                        Response.Redirect("AppConfiguration.aspx");
                     }
                 }
                 else if (string.IsNullOrEmpty(regID))

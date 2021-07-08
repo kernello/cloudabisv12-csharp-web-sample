@@ -46,7 +46,7 @@ namespace CloudABISSampleWebApp
                     SessionManager.CloudABISAPIToken = response.ResponseData.AccessToken;
                     SessionManager.CloudABISCredentials = cloudABISCredentials;
                     //
-                    lblStatus.Text = "Device: " + DeviceName() + ", Engine: " + EngineName();
+                    lblStatus.Text = "Device:" + DeviceName() + ", Engine:" + EngineName();
                 }
                 else lblStatus.Text = "CloudABIS Not Authorized!. Please check credentails";
             }

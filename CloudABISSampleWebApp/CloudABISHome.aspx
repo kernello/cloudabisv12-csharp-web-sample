@@ -63,7 +63,7 @@
                     <asp:LinkButton ID="linkAuthenticate" runat="server" OnClick="lnkChangeActiveDevice_Click">Application Configuration</asp:LinkButton>
                 </div>
                 <div>
-                    <pre><asp:Label ID="lblStatus" runat="server" Visible="true" Text="Server Status: "></asp:Label></pre>
+                    <pre><asp:Label ID="lblStatus" runat="server" Visible="true" Text="Server Status:"></asp:Label></pre>
                 </div>
             </div>
         </form>

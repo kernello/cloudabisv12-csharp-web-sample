@@ -21,7 +21,7 @@ namespace CloudABISSampleWebApp
 
             if (!IsPostBack)
             {
-                if ((string.IsNullOrEmpty(SessionManager.CloudABISAPIToken) || SessionManager.CloudABISCredentials == null)) Response.Redirect("Authenticate.aspx");
+                if ((string.IsNullOrEmpty(SessionManager.CloudABISAPIToken) || SessionManager.CloudABISCredentials == null)) Response.Redirect("AppConfiguration.aspx");
 
             }
         }
@@ -53,7 +53,7 @@ namespace CloudABISSampleWebApp
                     }
                     else
                     {
-                        Response.Redirect("Authenticate.aspx");
+                        Response.Redirect("AppConfiguration.aspx");
                     }
                 }
                 else if (string.IsNullOrEmpty(txtNewID.Text.Trim())) lblMessage.Text = "Please give New ID";
