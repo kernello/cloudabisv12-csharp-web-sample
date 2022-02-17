@@ -12,7 +12,7 @@ namespace CloudABISSampleWebApp.Models.MatchingServer.Models
     /// <summary>
     /// Match result
     /// </summary>
-    public class MatchingResult : IMatchingResult
+    public class MatchingResult : MatchingBadRequestResponse, IMatchingResult
     {
         /// <summary>
         /// Matching instance id

@@ -1,6 +1,7 @@
 ﻿using CloudABISSampleWebApp.Models.MatchingServer.Models;
 using CloudABISSampleWebApp.Models.MatchingServer.Models.Request;
 using CloudABISSampleWebApp.Utilities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace CloudABISSampleWebApp.CloudABIS
 
             return result;
         }
-       
+
         /// <summary>
         /// 
         /// </summary>
@@ -71,13 +72,16 @@ namespace CloudABISSampleWebApp.CloudABIS
             MatchingResult result = new MatchingResult();
             try
             {
+                HttpStatusCode statusCode;
                 this._httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
 
                 var response = await this._httpClient.PostAsJsonAsync<IsRegisterRequest>(AbisConstants.BIOMETRIC_ISREGISTERED_API_PATH, request);
 
+                statusCode = response.StatusCode;
+
                 if (response.IsSuccessStatusCode || response.StatusCode.Equals(HttpStatusCode.BadRequest))
                 {
-                    result = await response.Content.ReadAsAsync<MatchingResult>();
+                    result = JsonConvert.DeserializeObject<MatchingResult>(await response.Content.ReadAsStringAsync());
                 }
                 else if (response.StatusCode.Equals(HttpStatusCode.Unauthorized))
                 {
@@ -92,7 +96,7 @@ namespace CloudABISSampleWebApp.CloudABIS
                     result = new MatchingResult { OperationResult = AbisConstants.ABISBadGateWay };
                 }
             }
-            catch (Exception) { throw; }
+            catch (Exception ex) { throw; }
 
             return result;
         }
@@ -110,7 +114,7 @@ namespace CloudABISSampleWebApp.CloudABIS
                 var response = await this._httpClient.PostAsJsonAsync<BiometricGenericRequest>(AbisConstants.BIOMETRIC_REGISTER_API_PATH, request);
                 if (response.IsSuccessStatusCode || response.StatusCode.Equals(HttpStatusCode.BadRequest))
                 {
-                    result = await response.Content.ReadAsAsync<MatchingResult>();
+                    result = JsonConvert.DeserializeObject<MatchingResult>(await response.Content.ReadAsStringAsync());
                 }
                 else if (response.StatusCode.Equals(HttpStatusCode.Unauthorized))
                 {
@@ -141,12 +145,12 @@ namespace CloudABISSampleWebApp.CloudABIS
             try
             {
                 this._httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-              
+
                 var response = await this._httpClient.PostAsJsonAsync<IdentityRequest>(AbisConstants.BIOMETRIC_IDENTIFY_API_PATH, request);
 
                 if (response.IsSuccessStatusCode || response.StatusCode.Equals(HttpStatusCode.BadRequest))
                 {
-                    result = await response.Content.ReadAsAsync<MatchingResult>();
+                    result = JsonConvert.DeserializeObject<MatchingResult>(await response.Content.ReadAsStringAsync());
                 }
                 else if (response.StatusCode.Equals(HttpStatusCode.Unauthorized))
                 {
@@ -181,7 +185,7 @@ namespace CloudABISSampleWebApp.CloudABIS
 
                 if (response.IsSuccessStatusCode || response.StatusCode.Equals(HttpStatusCode.BadRequest))
                 {
-                    result = await response.Content.ReadAsAsync<MatchingResult>();
+                    result = JsonConvert.DeserializeObject<MatchingResult>(await response.Content.ReadAsStringAsync());
                 }
                 else if (response.StatusCode.Equals(HttpStatusCode.Unauthorized))
                 {
@@ -216,7 +220,7 @@ namespace CloudABISSampleWebApp.CloudABIS
 
                 if (response.IsSuccessStatusCode || response.StatusCode.Equals(HttpStatusCode.BadRequest))
                 {
-                    result = await response.Content.ReadAsAsync<MatchingResult>();
+                    result = JsonConvert.DeserializeObject<MatchingResult>(await response.Content.ReadAsStringAsync());
                 }
                 else if (response.StatusCode.Equals(HttpStatusCode.Unauthorized))
                 {
@@ -250,7 +254,7 @@ namespace CloudABISSampleWebApp.CloudABIS
 
                 if (response.IsSuccessStatusCode || response.StatusCode.Equals(HttpStatusCode.BadRequest))
                 {
-                    result = await response.Content.ReadAsAsync<MatchingResult>();
+                    result = JsonConvert.DeserializeObject<MatchingResult>(await response.Content.ReadAsStringAsync());
                 }
                 else if (response.StatusCode.Equals(HttpStatusCode.Unauthorized))
                 {
@@ -285,7 +289,7 @@ namespace CloudABISSampleWebApp.CloudABIS
 
                 if (response.IsSuccessStatusCode || response.StatusCode.Equals(HttpStatusCode.BadRequest))
                 {
-                    result = await response.Content.ReadAsAsync<MatchingResult>();
+                    result = JsonConvert.DeserializeObject<MatchingResult>(await response.Content.ReadAsStringAsync());
                 }
                 else if (response.StatusCode.Equals(HttpStatusCode.Unauthorized))
                 {
@@ -322,7 +326,7 @@ namespace CloudABISSampleWebApp.CloudABIS
 
                 if (response.IsSuccessStatusCode || response.StatusCode.Equals(HttpStatusCode.BadRequest))
                 {
-                    result = await response.Content.ReadAsAsync<CloudABISRootResponse<Usages>>();
+                    result = JsonConvert.DeserializeObject<CloudABISRootResponse<Usages>>(await response.Content.ReadAsStringAsync());
                 }
                 else if (response.StatusCode.Equals(HttpStatusCode.Unauthorized))
                 {

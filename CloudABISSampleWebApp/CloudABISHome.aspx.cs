@@ -19,17 +19,15 @@ namespace CloudABISSampleWebApp
             {
                 //Set key value in the session
                 LoadCloudABISToken();
-
-
             }
         }
 
         private void LoadCloudABISToken()
         {
             CloudABISAPICredential cloudABISCredentials = new CloudABISAPICredential();
-            cloudABISCredentials.BaseAPIURL = BaseURL(); //AppSettingsReader.CloudABISClientAPIKey;
-            cloudABISCredentials.ClientKey = ClientKey();//AppSettingsReader.CloudABISClientKey;
-            cloudABISCredentials.ClientAPIKey = ClientAPIKey(); //AppSettingsReader.CloudABISv12_API_URL;
+            cloudABISCredentials.BaseAPIURL = BaseURL();
+            cloudABISCredentials.ClientKey = ClientKey();
+            cloudABISCredentials.ClientAPIKey = ClientAPIKey();
 
             if (!string.IsNullOrEmpty(cloudABISCredentials.BaseAPIURL)
                 && !string.IsNullOrEmpty(cloudABISCredentials.ClientKey)
@@ -51,7 +49,6 @@ namespace CloudABISSampleWebApp
                 else lblStatus.Text = "CloudABIS Not Authorized!. Please check credentails";
             }
             else Response.Redirect("AppConfiguration.aspx");
-            //lblStatus.Text = "CloudABIS required credentials not found!. Please check application Configuration.";
 
         }
         #region Configuration
@@ -63,7 +60,10 @@ namespace CloudABISSampleWebApp
         {
             try
             {
-                return Request.Cookies["CABBaseURL"].Value.ToString();
+                if (Request.Cookies != null
+                   && Request.Cookies.AllKeys.Contains("CABBaseURL"))
+                    return Request.Cookies["CABBaseURL"].Value.ToString();
+                else return "";
             }
             catch (Exception)
             {
@@ -78,7 +78,10 @@ namespace CloudABISSampleWebApp
         {
             try
             {
-                return Request.Cookies["CABClientKey"].Value.ToString();
+                if (Request.Cookies != null
+                    && Request.Cookies.AllKeys.Contains("CABClientKey"))
+                    return Request.Cookies["CABClientKey"].Value.ToString();
+                else return "";
             }
             catch (Exception)
             {
@@ -93,7 +96,10 @@ namespace CloudABISSampleWebApp
         {
             try
             {
-                return Request.Cookies["CABClientAPIKey"].Value.ToString();
+                if (Request.Cookies != null
+                    && Request.Cookies.AllKeys.Contains("CABClientAPIKey"))
+                    return Request.Cookies["CABClientAPIKey"].Value.ToString();
+                else return "";
             }
             catch (Exception)
             {
@@ -109,7 +115,10 @@ namespace CloudABISSampleWebApp
         {
             try
             {
-                return Request.Cookies["CABEngineName"].Value.ToString();
+                if (Request.Cookies != null
+                   && Request.Cookies.AllKeys.Contains("CABEngineName"))
+                    return Request.Cookies["CABEngineName"].Value.ToString();
+                else return "";
             }
             catch (Exception)
             {
@@ -124,7 +133,10 @@ namespace CloudABISSampleWebApp
         {
             try
             {
-                return Request.Cookies["CSDeviceName"].Value.ToString();
+                if (Request.Cookies != null
+                    && Request.Cookies.AllKeys.Contains("CSDeviceName"))
+                    return Request.Cookies["CSDeviceName"].Value.ToString();
+                else return "";
             }
             catch (Exception)
             {

@@ -1,5 +1,6 @@
 ﻿using CloudABISSampleWebApp.CloudABIS;
 using CloudABISSampleWebApp.Models;
+using CloudABISSampleWebApp.Models.MatchingServer.Enums;
 using CloudABISSampleWebApp.Models.MatchingServer.Models;
 using CloudABISSampleWebApp.Models.MatchingServer.Models.Request;
 using CloudABISSampleWebApp.Utilities;
@@ -50,7 +51,7 @@ namespace CloudABISSampleWebApp
                         };
                         MatchingResult response = Task.Run(() => cloudABISConnector.RegisterAsync(request, token)).Result;
 
-                        serverResult.Text = JsonConvert.SerializeObject(response, Formatting.Indented);
+                        serverResult.Text = CloudABISResultParser.GetBiometricMatchingResponse(response, EnumOperationName.Register).Message;//JsonConvert.SerializeObject(response, Formatting.Indented);
                     }
                     else
                     {

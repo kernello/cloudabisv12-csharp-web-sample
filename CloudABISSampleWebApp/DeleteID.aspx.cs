@@ -1,4 +1,5 @@
 ﻿using CloudABISSampleWebApp.CloudABIS;
+using CloudABISSampleWebApp.Models.MatchingServer.Enums;
 using CloudABISSampleWebApp.Models.MatchingServer.Models;
 using CloudABISSampleWebApp.Models.MatchingServer.Models.Request;
 using CloudABISSampleWebApp.Utilities;
@@ -48,7 +49,7 @@ namespace CloudABISSampleWebApp
                         };
                         MatchingResult response = Task.Run(() => cloudABISConnector.DeleteIdAsync(request, token)).Result;
 
-                        lblMessage.Text = JsonConvert.SerializeObject(response, Formatting.Indented);
+                        lblMessage.Text = CloudABISResultParser.GetBiometricMatchingResponse(response, EnumOperationName.DeleteID).Message;//JsonConvert.SerializeObject(response, Formatting.Indented);
                     }
                     else
                     {
