@@ -20,6 +20,13 @@
          */
         function captureBiometric() {
             debugger
+            var regId = document.getElementById('txtVerifyID').value;
+            if (regId == '') {
+                document.getElementById('<%= serverResult.ClientID %>').innerHTML = "Please put verify id first!"
+                return;
+            }
+            showLoader();
+
             document.getElementById('bioImages').value = '';
             document.getElementById('bioImages').style.display = 'none';
             document.getElementById('<%= serverResult.ClientID %>').innerHTML = '';
@@ -28,7 +35,7 @@
             engineName = getCookieValue("CABEngineName");
             document.getElementById('<%=lblCurrentDeviceName.ClientID%>').innerHTML = deviceName;
 
-            var apiPath = "http://localhost:15896/";
+            var apiPath = CLOUDABISSCANR_BASE_API_URL;
 
             //Init CloudABIS Scanr
             CloudABISScanrInit(apiPath);
@@ -36,8 +43,10 @@
             captureType = captureType.options[captureType.selectedIndex].value;
             var quickScan = EnumFeatureMode.Disable;
 
-        /*API Call*/
-            if (engineName == EnumEngines.FingerPrint) {
+           
+
+            /*API Call*/
+            if (engineName == EnumEnginesMapper.FingerPrint) {
                 var captureParam = {
                     DeviceName: deviceName,
                     QuickScan: quickScan,
@@ -48,7 +57,7 @@
                 }
                 FingerPrintCapture(captureParam, CaptureResult);
             }
-            else if (engineName == EnumEngines.Iris) {
+            else if (engineName == EnumEnginesMapper.Iris) {
                 var captureParam = {
                     DeviceName: deviceName,
                     QuickScan: quickScan,
@@ -59,7 +68,7 @@
 
                 IrisCapture(captureParam, CaptureResult);
             }
-            else if (engineName == EnumEngines.Face) {
+            else if (engineName == EnumEnginesMapper.Face) {
                 var captureParam = {
                     DeviceName: deviceName,
                     QuickScan: quickScan,
@@ -70,43 +79,76 @@
                 }
                 FaceCapture(captureParam, CaptureResult);
             }
-        }
+            else if (engineName == EnumEnginesMapper.MultiModal) {
 
+                var v12BaseAPI = getCookieValue("CABBaseURL");
+                var v12ClientKey = getCookieValue("CABClientKey");
+                var v12ClientAPIKey = getCookieValue("CABClientAPIKey");
 
-        function getCookieValue(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                var fvBaseAPI = getCookieValue("FVBaseURL");
+                var fvAppKey = getCookieValue("FVAppKey");
+                var fvSecretKey = getCookieValue("FVSecretKey");
+                var fvCustomerKey = getCookieValue("FVCustomerKey");
+
+                var captureParam = {
+                    RegistrationId: regId,
+                    OperationName: EnumMatchingOperationName.Verify,
+                    CloudABISAPICredential: {
+                        ClientKey: v12ClientKey,
+                        ClientAPIKey: v12ClientAPIKey,
+                        BaseAPIURL: v12BaseAPI
+                    },
+                    CloudABISFingerVeinCredentials: {
+                        APIURL: fvBaseAPI,
+                        AppKey: fvAppKey,
+                        SecretKey: fvSecretKey,
+                        CustomerKey: fvCustomerKey
+                    }
+                }
+                MultiModalBiometricMatchingOperation(captureParam, CaptureResult);
             }
-            return null;
         }
 
         /*
-                 * Hnadle capture data
-                 */
+         * Hnadle capture data
+        */
         function CaptureResult(captureResponse) {
 
-            debugger
-            if (captureResponse.CloudScanrStatus != null && captureResponse.CloudScanrStatus.Success) {
+            engineName = getCookieValue("CABEngineName");
+            hideLoader();
+            if (engineName == EnumEngines.MultiModal) {
 
-                if (captureResponse.Images != null) {
-                    document.getElementById('bioImages').value = JSON.stringify(captureResponse.Images);
-                }
-                else {
-                    document.getElementById('bioImages').style.display = 'none';
-                }
-                document.getElementById('<%= serverResult.ClientID %>').innerHTML = "Capture success. Please click on verify button";
+                if (captureResponse.ResponseData != null &&
+                    captureResponse.ResponseData.BiometricId != null)
+                    document.getElementById('<%= serverResult.ClientID %>').innerHTML = captureResponse.Message + captureResponse.ResponseData.BiometricId;
+                else document.getElementById('<%= serverResult.ClientID %>').innerHTML = captureResponse.Message;
+
             }
-            else if (captureResponse.CloudScanrStatus != null) {
-                document.getElementById('<%= serverResult.ClientID %>').innerHTML = captureResponse.CloudScanrStatus.Message;
-            } else {
-                document.getElementById('<%= serverResult.ClientID %>').innerHTML = captureResponse;
+            else {
+                if (captureResponse.CloudScanrStatus != null && captureResponse.CloudScanrStatus.Success) {
+
+                    if (captureResponse.Images != null) {
+                        document.getElementById('bioImages').value = JSON.stringify(captureResponse.Images);
+                    }
+                    else {
+                        document.getElementById('bioImages').style.display = 'none';
+                    }
+                    document.getElementById('<%= btnSubmit.ClientID %>').style.display = "block";
+                    document.getElementById('<%= serverResult.ClientID %>').innerHTML = "Capture success. Please click on verify button";
+                }
+                else if (captureResponse.CloudScanrStatus != null) {
+                    document.getElementById('<%= serverResult.ClientID %>').innerHTML = captureResponse.CloudScanrStatus.Message;
+                } else {
+                    document.getElementById('<%= serverResult.ClientID %>').innerHTML = captureResponse;
+                }
             }
         }
-
+        function showLoader() {
+            document.getElementById("loader").style.display = "block";
+        }
+        function hideLoader() {
+            document.getElementById("loader").style.display = "none";
+        }
     </script>
 
 
@@ -123,13 +165,14 @@
                 </select>
             </div>
             <div class="mt-10">
-                <label for="verifyID">Verify ID</label>
+                <label for="verifyID">Verify Id</label>
                 <asp:TextBox ID="txtVerifyID" runat="server"></asp:TextBox>
             </div>
+            <div id="loader" style="display: none;"></div>
             <div>
                 <label id="lblCurrentDeviceTitle" class="currentDeviceCaption">Current Device Name:</label><asp:Label ID="lblCurrentDeviceName" runat="server" Text="..."></asp:Label>
                 <input type="button" value="BioMetric Capture" onclick="captureBiometric()" />
-                <asp:Button ID="btnSubmit" runat="server" Text="Verify" Enabled="true" OnClick="btnVerify_Click" Height="40px" />
+                <asp:Button ID="btnSubmit" runat="server" Text="Verify" Enabled="true" Style="display: none" OnClick="btnVerify_Click" Height="40px" />
                 <asp:Button ID="Button1" runat="server" Text="Back" OnClick="BtnBack_Click" />
                 &nbsp;<pre><asp:Label ID="serverResult" runat="server" Text=""></asp:Label></pre>
             </div>

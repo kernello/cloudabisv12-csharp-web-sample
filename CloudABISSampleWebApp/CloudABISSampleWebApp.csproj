@@ -100,6 +100,9 @@
     <Content Include="Identify.aspx" />
     <Content Include="IsRegistered.aspx" />
     <Content Include="Register.aspx" />
+    <Content Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\rpbiopluginsample.pubxml">
       <SubType>Designer</SubType>
@@ -193,6 +196,7 @@
     <Compile Include="Models\MatchingServer\Models\FaceAttributes.cs" />
     <Compile Include="Models\MatchingServer\Models\FingerAttributes.cs" />
     <Compile Include="Models\MatchingServer\Models\IrisAttributes.cs" />
+    <Compile Include="Models\MatchingServer\Models\MatchingBadRequestResponse.cs" />
     <Compile Include="Models\MatchingServer\Models\MatchingResult.cs" />
     <Compile Include="Models\MatchingServer\Models\OperationalResponse.cs" />
     <Compile Include="Models\MatchingServer\Models\Request\BiometricGenericRequest.cs" />
@@ -206,6 +210,7 @@
     <Compile Include="Models\MatchingServer\Models\ResultScoreItem.cs" />
     <Compile Include="Models\MatchingServer\Models\ScoreIndex.cs" />
     <Compile Include="Models\MatchingServer\Models\Usages.cs" />
+    <Compile Include="Models\Response\CloudScanrRootResponse.cs" />
     <Compile Include="Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -228,6 +233,8 @@
     </Compile>
     <Compile Include="Utilities\AbisConstants.cs" />
     <Compile Include="Utilities\AppSettingsReader.cs" />
+    <Compile Include="Utilities\CloudABISResultParser.cs" />
+    <Compile Include="Utilities\ErrorCode.cs" />
     <Compile Include="Utilities\SessionManager.cs" />
     <Compile Include="Verify.aspx.cs">
       <DependentUpon>Verify.aspx</DependentUpon>
@@ -271,7 +278,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>23305</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:23298/</IISUrl>
+          <IISUrl>http://localhost:23398/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

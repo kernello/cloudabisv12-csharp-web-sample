@@ -1,6 +1,6 @@
 ﻿/*************************************************************************
  * CloudABIS-ScanR
- * ©2002-2021 KernellÓ Inc. All rights reserved.
+ * ©2002-2022 KernellÓ Inc. All rights reserved.
  *************************************************************************/
 
 /*
@@ -12,6 +12,7 @@ const CLOUDABISSCANR_IRIS_CAPTURE_API_PATH = "api/BioPluginV12/IrisCapture";
 const CLOUDABISSCANR_FACE_CAPTURE_API_PATH = "api/BioPluginV12/FaceCapture";
 const CLOUDABISSCANR_MULTI_MODEL_CAPTURE_API_PATH = "api/BioPluginV12/MultiModelCapture";
 const CLOUDABISSCANR_STATUS_API_PATH = "api/CloudScanr/ClientInfo";
+const CLOUDABISSCANR_MULTI_MODAL_MATCHING_API_PATH = "api/CloudScanrMultiModals";
 
 
 /*
@@ -33,6 +34,20 @@ const EnumCaptureOperationName = {
     "ENROLL": "ENROLL",
     "UPDATE": "UPDATE"
 }
+
+/*
+/* Identify, Verify, Enroll, Update
+*/
+const EnumMatchingOperationName = {
+    "Identify": "Identify",
+    "Register": "Register",
+    "Verify": "Verify",
+    "Update": "Update",
+    "DeleteId": "DeleteId",
+    "IsRegistered": "IsRegistered",
+    "ChangeId": "ChangeId"
+}
+
 
 /*
 /* Feature enable or disable. Like hidden capture enable
@@ -66,6 +81,37 @@ const EnumDevices = {
     "EF45": "EF45",
     "Face": "Face"
 }
+/*
+ * Fingerprint supported devices
+ */
+let FingerPrintDevices = new Array(
+    "TwoPrintFutronic",
+    "TenPrintFutronic",
+    "Secugen",
+    "DigitalPersona",
+    "TwoPrintWatsonMini",
+    "TenPrintWatsonMini"
+)
+/*
+ * Iris supported devices
+ */
+let IrisDevices = new Array(
+    "EMX30",
+    "TD100",
+    "EF45"
+)
+/*
+ * Face supported devices
+ */
+let FaceDevices = new Array(
+    "Face"
+)
+/*
+ * Multimodal supported devices
+ */
+let MultimodalDevices = new Array(
+    "MultiModal"
+)
 /*
 /* LeftThumb, LeftIndex, LeftMiddle, LeftPing, LeftRing, RightThumb, RightIndex, RightMiddle, RightPing, RightRing
 */
@@ -104,7 +150,18 @@ const EnumEngines = {
     "FingerPrint": "FPFF02",
     "FingerVein": "FVHT01",
     "Iris": "IRIS01",
-    "Face": "FACE01"
+    "Face": "FACE01",
+    "MultiModal": "MultiModal"
+}
+/*
+ * Supported engine name
+ */
+const EnumEnginesMapper = {
+    "FingerPrint": "FingerPrint",
+    "FingerVein": "FingerVein",
+    "Iris": "Iris",
+    "Face": "Face",
+    "MultiModal": "MultiModal"
 }
 /*
 /* Format of the generated biometric image. Default format is WSQ.
@@ -140,6 +197,44 @@ var _cloudABISScanrBaseAPI = CLOUDABISSCANR_BASE_API_URL;
 function CloudABISScanrInit(cloudABISScanrBaseAPI) {
     _cloudABISScanrBaseAPI = cloudABISScanrBaseAPI;
 
+}
+
+/*
+ * Finds engine name against device name
+ */
+function getEngineName(deviceName) {
+    if (FingerPrintDevices.indexOf(deviceName) >= 0) return EnumEnginesMapper.FingerPrint;
+    else if (IrisDevices.indexOf(deviceName) >= 0) return EnumEnginesMapper.Iris;
+    else if (FaceDevices.indexOf(deviceName) >= 0) return EnumEnginesMapper.Face;
+    else if (MultimodalDevices.indexOf(deviceName) >= 0) return EnumEnginesMapper.MultiModal;
+    else if (deviceName == EnumDevices.NONE) return "";
+
+}
+/*
+ * set cookie
+ */
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+/*
+ * Reading cookie value
+ */
+function getCookieValue(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
 }
 
 /*
@@ -378,6 +473,14 @@ function MultiModelCapture(captureParam, callback) {
 
 }
 
+/*
+ *Will be performed Iris biometric capture
+ */
+function MultiModalBiometricMatchingOperation(request, callback) {
+    var url = _cloudABISScanrBaseAPI + CLOUDABISSCANR_MULTI_MODAL_MATCHING_API_PATH;
+
+    postRequest(url, request, callback);
+}
 function postRequest(apiUrl, request, callback) {
     var httpClient = new XMLHttpRequest();
     httpClient.open('POST', apiUrl, true);
