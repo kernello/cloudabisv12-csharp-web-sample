@@ -21,6 +21,8 @@ namespace CloudABISSampleWebApp.CloudABIS
         /// <param name="ucsAPIBaseUrl"></param>
         public CloudABISConnector(string ucsAPIBaseUrl)
         {
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
             this._httpClient = new HttpClient();
             this._httpClient.BaseAddress = new Uri(ucsAPIBaseUrl);
             this._httpClient.DefaultRequestHeaders.Clear();
