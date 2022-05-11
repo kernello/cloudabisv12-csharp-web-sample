@@ -72,7 +72,7 @@
                 var captureParam = {
                     RegistrationId: regId,
                     OperationName: EnumMatchingOperationName.IsRegistered,
-                    CloudABISAPICredential: {
+                    CloudABISV12APICredential: {
                         ClientKey: v12ClientKey,
                         ClientAPIKey: v12ClientAPIKey,
                         BaseAPIURL: v12BaseAPI
