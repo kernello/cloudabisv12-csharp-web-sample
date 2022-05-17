@@ -76,9 +76,12 @@ const EnumDevices = {
     "DigitalPersona": "DigitalPersona",
     "TwoPrintWatsonMini": "TwoPrintWatsonMini",
     "TenPrintWatsonMini": "TenPrintWatsonMini",
+    "Kojak": "Kojak",
+    "RealScanG10": "RealScanG10",
     "EMX30": "EMX30",
     "TD100": "TD100",
     "EF45": "EF45",
+    "IriTechBinocular": "IriTechBinocular",
     "Face": "Face"
 }
 /*
@@ -90,7 +93,9 @@ let FingerPrintDevices = new Array(
     "Secugen",
     "DigitalPersona",
     "TwoPrintWatsonMini",
-    "TenPrintWatsonMini"
+    "TenPrintWatsonMini",
+    "Kojak",
+    "RealScanG10"
 )
 /*
  * Iris supported devices
@@ -98,7 +103,8 @@ let FingerPrintDevices = new Array(
 let IrisDevices = new Array(
     "EMX30",
     "TD100",
-    "EF45"
+    "EF45",
+    "IriTechBinocular"
 )
 /*
  * Face supported devices

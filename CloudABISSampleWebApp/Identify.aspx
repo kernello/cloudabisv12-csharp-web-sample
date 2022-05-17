@@ -101,12 +101,12 @@
                 MultiModalBiometricMatchingOperation(captureParam, CaptureResult);
             }
         }
-      
+
         /*
          * Hnadle capture data
          */
         function CaptureResult(captureResponse) {
-          
+
             hideLoader();
             engineName = getCookieValue("CABEngineName");
             if (engineName == EnumEngines.MultiModal) {

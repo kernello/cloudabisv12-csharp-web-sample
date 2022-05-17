@@ -201,6 +201,16 @@ namespace CloudABISSampleWebApp.Utilities
                 response.Message = ErrorCode.CS0229_MESSAGE;
                 response.ResponseCode = ErrorCode.CS0229;
             }
+            else if (biometricMatchingResponse.OperationResult.Equals(AbisConstants.UCSUnreachable))
+            {
+                response.Message = ErrorCode.CSC503_MESSAGE;
+                response.ResponseCode = ErrorCode.CSC503;
+            }
+            else if (biometricMatchingResponse.OperationResult.Equals(AbisConstants.UCSUnAuthorize))
+            {
+                response.Message = ErrorCode.CSC401_MESSAGE;
+                response.ResponseCode = ErrorCode.CSC401;
+            }
             else
             {
                 response.Message = biometricMatchingResponse.Message;

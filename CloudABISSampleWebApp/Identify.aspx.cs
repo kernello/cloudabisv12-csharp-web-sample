@@ -22,9 +22,8 @@ namespace CloudABISSampleWebApp
         {
             if (!IsPostBack)
             {
-                if ((string.IsNullOrEmpty(SessionManager.CloudABISAPIToken) || SessionManager.CloudABISCredentials == null)) Response.Redirect("AppConfiguration.aspx");
-
-
+                if ((string.IsNullOrEmpty(SessionManager.CloudABISAPIToken) 
+                    || SessionManager.CloudABISCredentials == null)) Response.Redirect("AppConfiguration.aspx");
             }
         }
 

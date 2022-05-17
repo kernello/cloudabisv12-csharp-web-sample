@@ -102,10 +102,13 @@
                         <option value="DigitalPersona">DigitalPersona</option>
                         <option value="TwoPrintWatsonMini">TwoPrintWatsonMini</option>
                         <option value="TenPrintWatsonMini">TenPrintWatsonMini</option>
+                        <option value="Kojak">Kojak</option>
+                        <option value="RealScanG10">RealScanG10</option>
                         <option value="EMX30">EMX30</option>
                         <option value="Face">Face</option>
                         <option value="TD100">TD100</option>
                         <option value="EF45">EF45</option>
+                        <option value="IriTechBinocular">IriTechBinocular</option>
                         <option value="MultiModal">MultiModal</option>
                     </select>
                     <div id="engineDiv" style="display: none;">
@@ -122,7 +125,7 @@
                 <div class="col-md-12">
                     <div id="divCloudABIS" class="col-md-6 float-left">
                         <fieldset class="ridge">
-                            <legend>CloudABIS Credentils</legend>
+                            <legend>CloudABIS v12 Credentils</legend>
                             <div>
 
                                 <div class="txtLebel">
