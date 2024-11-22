@@ -7,12 +7,12 @@
  * CloudABISScanr APIs path
  */
 const CLOUDABISSCANR_BASE_API_URL = "http://localhost:15896/";
-const CLOUDABISSCANR_FP_CAPTURE_API_PATH = "api/BioPluginV12/FPCapture";
-const CLOUDABISSCANR_IRIS_CAPTURE_API_PATH = "api/BioPluginV12/IrisCapture";
-const CLOUDABISSCANR_FACE_CAPTURE_API_PATH = "api/BioPluginV12/FaceCapture";
-const CLOUDABISSCANR_MULTI_MODEL_CAPTURE_API_PATH = "api/BioPluginV12/MultiModelCapture";
+const CLOUDABISSCANR_FP_CAPTURE_API_PATH = "api/CloudABISV12Captures/Fingerprint";
+const CLOUDABISSCANR_IRIS_CAPTURE_API_PATH = "api/CloudABISV12Captures/Iris";
+const CLOUDABISSCANR_FACE_CAPTURE_API_PATH = "api/CloudABISV12Captures/Face";
+const CLOUDABISSCANR_MULTI_MODEL_CAPTURE_API_PATH = "api/CloudABISV12Captures/MultiModel";
 const CLOUDABISSCANR_STATUS_API_PATH = "api/CloudScanr/ClientInfo";
-const CLOUDABISSCANR_MULTI_MODAL_MATCHING_API_PATH = "api/CloudScanrMultiModals";
+const CLOUDABISSCANR_MULTI_MODAL_MATCHING_API_PATH = "api/CloudScanrMultiModals/Matching";
 
 
 /*
@@ -76,9 +76,12 @@ const EnumDevices = {
     "DigitalPersona": "DigitalPersona",
     "TwoPrintWatsonMini": "TwoPrintWatsonMini",
     "TenPrintWatsonMini": "TenPrintWatsonMini",
+    "Kojak": "Kojak",
+    "RealScanG10": "RealScanG10",
     "EMX30": "EMX30",
     "TD100": "TD100",
     "EF45": "EF45",
+    "IriTechBinocular": "IriTechBinocular",
     "Face": "Face"
 }
 /*
@@ -90,7 +93,9 @@ let FingerPrintDevices = new Array(
     "Secugen",
     "DigitalPersona",
     "TwoPrintWatsonMini",
-    "TenPrintWatsonMini"
+    "TenPrintWatsonMini",
+    "Kojak",
+    "RealScanG10"
 )
 /*
  * Iris supported devices
@@ -98,7 +103,8 @@ let FingerPrintDevices = new Array(
 let IrisDevices = new Array(
     "EMX30",
     "TD100",
-    "EF45"
+    "EF45",
+    "IriTechBinocular"
 )
 /*
  * Face supported devices

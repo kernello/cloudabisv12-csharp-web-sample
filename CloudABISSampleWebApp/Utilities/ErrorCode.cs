@@ -186,5 +186,17 @@ namespace CloudABISSampleWebApp.Utilities
         public const string CS0230 = "CS0230";
         public const string CS0230_MESSAGE = "The submitted BiometricXml was not correctly formatted.";
         #endregion
+        #region Common 401, 500, 502, 503
+        public const string CSC401 = "401";
+        public const string CSC401_MESSAGE = "Unauthorized";
+        public const string CSC500 = "500";
+        public const string CSC500_MESSAGE = "Internal error";
+        public const string CSC502 = "502";
+        public const string CSC502_MESSAGE = "Bad gateway";
+        public const string CSC503 = "503";
+        public const string CSC503_MESSAGE = "Service unavailable";
+
+
+        #endregion
     }
 }

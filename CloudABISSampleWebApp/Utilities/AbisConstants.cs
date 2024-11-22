@@ -201,6 +201,10 @@ namespace CloudABISSampleWebApp.Utilities
         /// 
         /// </summary>
         public const string ExtractionFailed = "EXTRACTION_FAILED";
+
+        public const string UCSUnAuthorize = "CloudABIS Server UnAuthorized.";
+        public const string UCSUnreachable = "CloudABIS Server Unreachable.";
+        public const string UCSBadGateWay = "CloudABIS Server Bad Gateway";
         #endregion
     }
 }
